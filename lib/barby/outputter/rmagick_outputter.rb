@@ -48,7 +48,9 @@ module Barby
     #Returns an instance of Magick::Image
     def to_image(opts={})
       with_options opts do
-        canvas = Magick::Image.new(full_width, full_height)
+        canvas = Magick::Image.new(full_width, full_height) do
+          yield(self) if block_given?
+        end
         bars = Magick::Draw.new
 
         x1 = margin
